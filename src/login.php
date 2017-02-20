@@ -31,6 +31,7 @@ if (isset($_POST['submit'])) {
       // Mark user as logged in
       $_SESSION["user_id"] = $found_user["id"];
       $_SESSION["username"] = $found_user["username"];
+      $_SESSION["message"] = "User logged in.";
       redirect_to("dashboard.php");
     } else {
       // Failure
@@ -61,26 +62,24 @@ if (isset($_POST['submit'])) {
             <input 
               type="text" 
               name="username" 
+              class="form-control"
               value="<?php echo htmlentities($username); ?>" 
             />
-            <p><a href="">Forgot your username?</a></p>  
-            <br/>
           </div>
           <div class="form-group">
             <label for="password">Password</label>
             <input 
               type="password" 
               name="password" 
+              class="form-control"
               value="" 
             />
-            <p><a href="">Forgot your password?</a></p>  
-            <br/>
           </div>
           <input 
             class="btn btn-primary" 
             type="submit" 
             name="submit" 
-            value="Submit" 
+            value="Login" 
           />
         </form>
         <h3>New? Create a new user</h3>

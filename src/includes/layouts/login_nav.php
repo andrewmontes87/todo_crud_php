@@ -10,18 +10,19 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <!-- <a class="navbar-brand" href="#">Brand</a> -->
+      <a class="navbar-brand" href="/">todo_crud_php</a>
     </div>
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <p class="navbar-text">
-        <?php if ($loggedin) {
-          echo "Signed in as <strong>" . $_SESSION["username"] . "</strong>";
-        } else {
-          echo "Sign in or create an account to get started";
-        } ?>
-      </p>
+
       <ul class="nav navbar-nav navbar-right">
+        <p class="navbar-text">
+          <?php if ($loggedin) {
+            echo "Signed in as <strong>" . $_SESSION["username"] . "</strong>";
+          } else {
+            echo "Sign in or create an account to get started";
+          } ?>
+        </p>
         <?php if ($loggedin) { ?>
           <li><a href="dashboard.php">Dashboard</a></li>
           <li><a href="update_user.php"><i class="fa fa-user"></i> Update your profile</a></li>
