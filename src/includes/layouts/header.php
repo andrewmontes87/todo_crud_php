@@ -17,7 +17,7 @@ if ($page_title) {
     <link href="css/style.css" media="all" rel="stylesheet" type="text/css" />
   </head>
   <body>
-    <div class="login-nav">
+    <div class="login-nav container-wrap">
       <div class="container">
         <div class="row">
           <div class="col-sm-12">

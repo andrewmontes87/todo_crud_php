@@ -1,9 +1,11 @@
 
 body {
+  background-color: #434343;
 }
 
 
 .container-wrap {
+  background-color: white;
   padding: 1em;
 }
 
