@@ -1,0 +1,85 @@
+
+body {
+  font-family: 'Montserrat', 'Helvetica', sans-serif;
+}
+
+.btn-primary {
+  background-color: #28AA24;
+  border-color: #28AA24;
+}
+.btn-primary:hover, .btn-primary:active, .btn-primary:focus, .btn-primary:active:focus {
+  background-color: #2EC64D;
+  border-color: #2EC64D;
+}
+
+.btn-danger {
+  background-color: #044A02;
+  border-color: #044A02;
+}
+.btn-danger:hover, .btn-danger:active, .btn-danger:focus, .btn-danger:active:focus {
+  background-color: #434343;
+  border-color: #434343;
+}
+
+a {
+  color: #28AA24;
+}
+a:hover, a:active, a:focus {
+  color: #2EC64D;
+}
+
+
+.container-wrap {
+  padding: 3em 1em;
+}
+
+.footer {
+  background-color: #434343;
+  color: white;
+  min-height: 150px;
+}
+.footer a {
+  color: white;
+}
+
+.header {
+  background-color: #28AA24;
+  padding: 1em 1em;
+}
+.header a {
+  color: white;
+}
+.header a small{
+  color: #ddd;
+}
+
+.navbar-default {
+  border: 0;
+}
+
+.main {
+  /*background-color: #F2C300;*/
+  padding: 0em 1em 3em 1em;
+  min-height: 700px;
+  padding-bottom: 10em;
+}
+
+.login-form {
+  margin-bottom: 3em;
+}
+
+.btn {
+  margin-bottom: 1em;
+}
+
+.dashboard-character-details {
+  list-style-type: none;
+}
+
+hr {
+  height: 6px;
+  background: url(../img/hr.png) repeat-x 0 0;
+  border: 0;
+  margin-top: 3em;
+  margin-bottom: 5em;
+}
