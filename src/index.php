@@ -7,29 +7,34 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h2>Home</h2>
-        <p>A simple CRUD app built with PHP. Make an account, then create a portfolio and save it to your profile.</p>
-        <p>Features so far:</p>
-        <ul>
-          <li>Account creation</li>
-          <li>Login and logout</li>
-          <li>Update your profile</li>
-          <li>Delete your account</li>
-          <li>Portfolio creation</li>
-          <li>Update investment profiles</li>
-          <li>Portfolio deletion</li>
-        </ul>
+        <h1>TODO List: PHP</h1>
+
+        <p class="lead">A simple TODO list CRUD app built with PHP. Make an account, create notes and save them to your profile.</p>
         <?php if ($loggedin) { ?>
         <h3>You are signed in <small><?php echo $_SESSION["username"]; ?></small></h3>
-        <a href="dashboard.php" class="btn btn-primary"><i class="fa fa-list"></i> Go to dashboard</a>
-        <br/>
-        <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out"></i> Logout</a>
+        <div class="form-group">
+          <a href="dashboard.php" class="btn btn-primary"><i class="fa fa-list"></i> Go to dashboard</a>
+        </div>
+        <div class="form-group">
+          <a href="logout.php" class="btn btn-danger"><i class="fa fa-sign-out"></i> Logout</a>
+        </div>
         <?php } else { ?>
         <h3>New? Create a new user</h3>
         <a href="new_user.php" class="btn btn-primary"><i class="fa fa-user-plus"></i> Register a new user account</a>
         <h3>Already have a username? Login</h3>
         <a href="login.php" class="btn btn-warning"><i class="fa fa-sign-in"></i> Login</a>
         <?php } ?>
+        <h4>Features:</h4>
+        <ul>
+          <li>Account creation + login/logout</li>
+          <li>Update or delete your account</li>
+          <li>Create, update, delete notes</li>
+        </ul>
+        <h4>Stack:</h4>
+        <ul>
+          <li><a href="https://secure.php.net/" title="php" target="_blank">PHP</a></li>
+          <li><a href="https://www.mysql.com/" title="MySQL" target="_blank">MySQL</a></li>
+        </ul>
       </div>
     </div>
   </div>  

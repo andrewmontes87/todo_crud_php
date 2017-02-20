@@ -33,6 +33,12 @@ class MySQLDatabase {
     $this->confirm_query($result);
     return $result;
   }
+
+  public function last_inserted_id($sql) {
+    $result = mysqli_insert_id($this->connection);
+    $this->confirm_query($result);
+    return $result;
+  }
   
   public function escape_value( $value ) {
     $magic_quotes_active = get_magic_quotes_gpc();

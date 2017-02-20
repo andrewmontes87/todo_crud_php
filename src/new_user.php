@@ -20,13 +20,16 @@ if (isset($_POST['submit'])) {
   $fields_with_max_lengths = array("username" => 30);
   validate_max_lengths($fields_with_max_lengths);
 
+  $fields_with_min_lengths = array("username" => 8, "password" => 8, "repeat-password" => 8);
+  validate_min_lengths($fields_with_min_lengths);
+
   validate_unique_username($_POST["username"]);
   
   validate_password_repeated($_POST["password"], $_POST["repeat-password"]);
   
   if (empty($errors)) {
     // User class handles db and session messages
-    User::insert_user($_POST["username"], $_POST["password"])
+    User::insert_user($_POST["username"], $_POST["password"]);
   }
 } else {
   // This is probably a GET request
@@ -46,32 +49,39 @@ if (isset($_POST['submit'])) {
           action="new_user.php" 
           method="post"
         >
-          <p>Username:
+          <div class="form-group">
+            <label for="username">Username</label>
             <input 
               type="text" 
               name="username" 
+              class="form-control"
               value="" 
             />
-          </p>
-          <p>Password:
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
             <input 
               type="password" 
               name="password" 
+              class="form-control"
               value="" 
             />
-          </p>
-          <p>Repeat password:
+          </div>
+          <div class="form-group">
+            <label for="repeat-password">Repeat password:</label>
             <input 
               type="password" 
               name="repeat-password" 
+              class="form-control"
               value="" 
             />
-          </p>
+          </div>
+          
           <input 
             class="btn btn-primary" 
             type="submit" 
             name="submit" 
-            value="Create User" 
+            value="Create user" 
           />
         </form>
         <br />

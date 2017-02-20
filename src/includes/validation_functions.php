@@ -1,6 +1,6 @@
 <?php
 require_once("user.php");
-require_once("fund.php");
+require_once("note.php");
 
 $errors = array();
 
@@ -43,6 +43,20 @@ function validate_max_lengths($fields_with_max_lengths) {
   }
 }
 
+function has_min_length($value, $min) {
+  return strlen($value) >= $min;
+}
+
+function validate_min_lengths($fields_with_min_lengths) {
+  global $errors;
+  // Expects an assoc. array
+  foreach($fields_with_min_lengths as $field => $min) {
+    $value = trim($_POST[$field]);
+    if (!has_min_length($value, $min)) {
+      $errors[$field] = fieldname_as_text($field) . " is too short - must be at least " . str($min) . " characters long" ;
+    }
+  }
+}
 
 function validate_password_repeated($password, $repeat) {
   global $errors;
@@ -59,37 +73,15 @@ function validate_unique_username($username) {
   if ($user) {
     $errors["unique-username"] = "That username is already taken.";
   }
-
-
 }
 
-
-function validate_unique_fund_name($name, $user_id) {
+function validate_unique_email($email) {
   global $errors;
-  $fund = Fund::find_by_name_and_user_id($name, $user_id);
-  if ($fund) {
-    $errors["unique-fund-name"] = "You're already using that name for another fund.";
+  $user = User::find_by_email($email);
+  if ($user) {
+    $errors["unique-email"] = "That email is already taken.";
   }
 }
-
-
-function validate_asset_manager_required($form_asset_manager, $form_other_asset_manager) {
-  global $errors;
-  if ($form_asset_manager == "Other" && !$form_other_asset_manager) {
-    $errors["other-blank"] = "Choose a value for asset manager.";
-    return true;
-  } else {
-    return false;
-  }
-}
-
-
-
-
-
-
-
-
 
 
 ?>

@@ -2,27 +2,10 @@
 require_once('database.php');
 require_once('functions.php');
 require_once('validation_functions.php');
+require_once('note.php');
 
 class User {
   
-  //
-  // form properties
-  public static function get_investor_type_options() {
-    return ["Individual investor",
-            "Institutional investor",
-            "Financial advisor",
-            "401k administrator",
-            "Asset manager",
-            "Other"];
-  }
-
-  public static function get_investor_assets_options() {
-    return ["0 - 10,000 USD",
-            "10,000 - 100,000 USD",
-            "100,000 - 1,000,000 USD",
-            "1,000,000 - 1,000,000,000 USD",
-            "1,000,000,000+ USD"];
-  }
 
   //
   // authentication functions
@@ -62,11 +45,14 @@ class User {
     global $db;
     $username = mysql_prep($username);
     $hashed_password = self::password_encrypt($password);
-    
-    $query  = "INSERT INTO fff_pap_users (";
-    $query .= "  username, hashed_password";
+    $created_at = gmdate("Y-m-d\TH:i:s\Z");
+    $updated_at = $created_at;
+    $query  = "INSERT INTO todo_crud_php_users (";
+    $query .= "  username, hashed_password,";
+    $query .= "  created_at, updated_at, email";
     $query .= ") VALUES (";
-    $query .= "  '{$username}', '{$hashed_password}'";
+    $query .= "  '{$username}', '{$hashed_password}',";
+    $query .= "  '{$created_at}', '{$updated_at}', ''";
     $query .= ")";
     $result = $db->query($query);
 
@@ -92,22 +78,30 @@ class User {
   // R
   // read
   public static function find_all() {
-    return self::find_by_sql("SELECT * FROM fff_pap_users");
+    return self::find_by_sql("SELECT * FROM todo_crud_php_users");
   }
   
   public static function find_by_id($id=0) {
     global $db;
-    $result_set = self::find_by_sql("SELECT * FROM fff_pap_users WHERE id={$id} LIMIT 1");
+    $result_set = self::find_by_sql("SELECT * FROM todo_crud_php_users WHERE id={$id} LIMIT 1");
     $found = $db->fetch_array($result_set);
     return $found;
   }
   
   public static function find_by_username($username="") {
     global $db;
-    $result_set = self::find_by_sql("SELECT * FROM fff_pap_users WHERE username='{$username}' LIMIT 1");
+    $result_set = self::find_by_sql("SELECT * FROM todo_crud_php_users WHERE username='{$username}' LIMIT 1");
     $found = $db->fetch_array($result_set);
     return $found;
   }
+
+  public static function find_by_email($email="") {
+    global $db;
+    $result_set = self::find_by_sql("SELECT * FROM todo_crud_php_users WHERE email='{$email}' LIMIT 1");
+    $found = $db->fetch_array($result_set);
+    return $found;
+  }
+
 
   public static function find_by_sql($sql="") {
     global $db;
@@ -118,16 +112,15 @@ class User {
   // U
   // update
   public static function update_user($id=0, 
-                                     $investor_type="", 
-                                     $investor_assets="") {
+                                     $email="") {
     global $db;
 
-    $safe_investor_type = mysql_prep($investor_type);
-    $safe_investor_assets = mysql_prep($investor_assets);
+    $safe_email = mysql_prep($email);
 
-    $query  = "UPDATE fff_pap_users SET ";
-    $query .= "investor_type = '{$safe_investor_type}', ";
-    $query .= "investor_assets = '{$safe_investor_assets}' ";
+    $updated_at = gmdate("Y-m-d\TH:i:s\Z");
+    $query  = "UPDATE todo_crud_php_users SET ";
+    $query .= "email = '{$safe_email}', ";
+    $query .= "updated_at = '{$updated_at}' ";
     $query .= "WHERE id = {$id} ";
     $query .= "LIMIT 1";
     $result = $db->query($query);
@@ -144,15 +137,24 @@ class User {
   // D
   // delete
   public static function delete_user($id=0){
-    global $db;    
-    $query = "DELETE FROM fff_pap_users WHERE id = {$id} LIMIT 1";
+    global $db;
+
+    $query = "DELETE FROM todo_crud_php_users WHERE id = {$id} LIMIT 1";
     $result = $db->query($query);
     if ($result && $db->affected_rows() == 1) {
       // Success
-      $_SESSION["message"] = "User deleted.";
-      $_SESSION["user_id"] = null;
-      $_SESSION["username"] = null;
-      redirect_to("login.php");
+
+      $deletions = Note::delete_all_user_notes($_SESSION["user_id"]);
+
+      if ($deletions) {
+        $_SESSION["message"] = "User deleted.";
+        $_SESSION["user_id"] = null;
+        $_SESSION["username"] = null;
+        redirect_to("login.php");
+      } else {
+        redirect_to("dashboard.php");
+      }
+
     } else {
       // Failure
       $_SESSION["message"] = "User deletion failed.";

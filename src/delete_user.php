@@ -39,8 +39,9 @@ if (isset($_POST['submit'])) {
     <div class="row">
       <div class="col-sm-12">
         <?php echo message(); ?>
-        <h2><i class="fa fa-trash-o"></i> Delete account</h2>
-        <p>Are you sure you want to delete your account, <strong><?php echo htmlentities($_SESSION["username"]); ?></strong>?</p>
+        <h2><i class="fa fa-trash-o"></i> Delete user account</h2>
+        <p>Are you sure you want to delete your account?
+          <p>Username: <strong><?php echo htmlentities($_SESSION["username"]); ?></strong></p>
         <form 
           action="delete_user.php" 
           method="post" 
@@ -51,14 +52,18 @@ if (isset($_POST['submit'])) {
             value="true" 
             name="delete"
           >
-          <input 
-           class="btn btn-danger" 
-           type="submit" 
-           name="submit" 
-           value="Delete" 
-          />
+          <div class="form-group">
+            <input 
+             class="btn btn-danger" 
+             type="submit" 
+             name="submit" 
+             value="Delete" 
+            />
+          </div>
         </form>
-        <a href="update_user.php" class="btn btn-primary"><i class="fa fa-ban"></i> Cancel - don't delete my account</a>
+        <div class="form-group">
+          <a href="update_user.php" class="btn btn-primary"><i class="fa fa-ban"></i> Cancel - don't delete my account</a>
+        </div>
       </div>
     </div>
   </div>

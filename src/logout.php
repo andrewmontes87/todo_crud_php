@@ -25,12 +25,6 @@ if (isset($_POST['submit'])) {
   validate_presences($required_fields);
 
   if (empty($errors)) {
-    // $user = User::find_by_id($_SESSION["user_id"]);
-    // if (!$user) {
-    //   // admin ID was missing or invalid or 
-    //   // admin couldn't be found in database
-    //   redirect_to("login.php");
-    // }
     // Success
     $_SESSION["message"] = "User logged out.";
     $_SESSION["user_id"] = null;
@@ -48,7 +42,7 @@ if (isset($_POST['submit'])) {
       <div class="col-sm-12">
         <?php echo message(); ?>
         <h2><i class="fa fa-sign-out"></i> Logout</h2>
-        <p>Are you sure you want to logout, <strong><?php echo htmlentities($_SESSION["username"]); ?></strong>?</p>
+        <p>Are you sure you want to logout?</p>
         <form 
           action="logout.php" 
           method="post" 
@@ -59,14 +53,18 @@ if (isset($_POST['submit'])) {
             value="true" 
             name="logout"
           />
-          <input 
-            class="btn btn-danger" 
-            type="submit" 
-            name="submit" 
-            value="Logout" 
-          />
+          <div class="form-group">
+            <input 
+              class="btn btn-danger" 
+              type="submit" 
+              name="submit" 
+              value="Logout" 
+            />
+          </div>
         </form>
-        <a href="dashboard.php" class="btn btn-primary"><i class="fa fa-arrow-right"></i> No, stay logged in</a>
+        <div class="form-group">
+          <a href="dashboard.php" class="btn btn-primary"><i class="fa fa-arrow-right"></i> No, stay logged in</a>
+        </div>
       </div>
     </div>
   </div>

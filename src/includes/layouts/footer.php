@@ -2,7 +2,10 @@
       <div class="container">
         <div class="row">
           <div class="col-sm-12">
-            <p>&copy; <?php echo date("Y"); ?> | <a href="https://fossilfreefunds.org" target="_blank" title="fossilfreefunds.org">fossilfreefunds.org</a> | <a href="http://www.asyousow.org" target="_blank" title="www.asyousow.org">asyousow.org</a></p>
+            <h4>Source code</h4>
+            <p><a href="https://github.com/andrewmontes87/todo_crud_php" title="https://github.com/andrewmontes87/todo_crud_php" target="_blank">https://github.com/andrewmontes87/todo_crud_php</a></p>
+
+            <p>&copy; <?php echo date("Y"); ?> | <a href="http://www.asyousow.org" target="_blank" title="www.asyousow.org">asyousow.org</a></p>
           </div>
         </div>
       </div>
@@ -17,22 +20,7 @@
       crossorigin="anonymous"></script>
     <script src="https://use.fontawesome.com/5fe6d738dc.js"></script>
     <script>
-      $('#investment-strategy-select').on('change', function(){
-        var selected_option = $('#investment-strategy-select option:selected');
-        if (selected_option[0].value === 'Other') {
-          $('#other-investment-strategy-select').removeClass('hidden');
-        } else {
-          $('#other-investment-strategy-select').addClass('hidden');
-        }
-      });
-      $('#asset-manager-select').on('change', function(){
-        var selected_option = $('#asset-manager-select option:selected');
-        if (selected_option[0].value === 'Other') {
-          $('#other-asset-manager-select').removeClass('hidden');
-        } else {
-          $('#other-asset-manager-select').addClass('hidden');
-        }
-      });
+      //
     </script>
   </body>
 </html>

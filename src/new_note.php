@@ -2,14 +2,16 @@
 <?php require_once("./includes/database.php"); ?>
 <?php require_once("./includes/functions.php"); ?>
 <?php require_once("./includes/validation_functions.php"); ?>
+<?php require_once("./includes/note.php"); ?>
 <?php 
 // Pass values to header
 global $page_title;
-$page_title = "Update User";
+$page_title = "Add a new note";
 
 confirm_logged_in(); 
 
 $user = User::find_by_id($_SESSION["user_id"]);
+
 
 if (!$user) {
   // user ID was missing or invalid or 
@@ -18,30 +20,35 @@ if (!$user) {
 }
 
 // prep empty form variables
-$form_email = (isset($user["email"]) ? $user["email"] : "");
+$form_title = '';
 
 if (isset($_POST['submit'])) {
   // Process the form
   
   // validations
-  $required_fields = array("email");
+  $required_fields = array("title");
   validate_presences($required_fields);
+  
+  $fields_with_max_lengths = array("title" => 30);
+  validate_max_lengths($fields_with_max_lengths);
 
-  // validate unique email
-  validate_unique_email($_POST["email"]);
+  // validate_unique_note_name($_POST["title"], $_SESSION["user_id"]);
 
   // update form variables if they've been posted
   // so if error, form still shows values that were just submitted
-  $form_email = (isset($_POST["email"]) ? $_POST["email"] : "");
-  
+  $form_title = (isset($_POST["title"]) ? $_POST["title"] : "");
+
+  // validate_asset_manager_required($form_asset_manager, $form_other_asset_manager);
+
   if (empty($errors)) {
-    // User class handles db and session messages
-    User::update_user($user["id"], $form_email); 
+    // Note class handles db and session messages
+    Note::insert_note($_SESSION["user_id"], $_POST["title"]);
   }
 } else {
   // This is probably a GET request
   
 } // end: if (isset($_POST['submit']))
+
 
 ?>
 <?php include("./includes/layouts/header.php"); ?>
@@ -51,42 +58,32 @@ if (isset($_POST['submit'])) {
       <div class="col-sm-12">
         <?php echo message(); ?>
         <?php echo form_errors($errors); ?>
-        <h2><i class="fa fa-user"></i> Update your user profile</h2>
-
-        <p><strong>Username: <?php echo htmlentities($user["username"]); ?></strong> <small><i>(can't be changed)</i></small></p>
-
-        <p><strong>Date joined: </strong> <?php echo date('Y-m-d g:i:s', strtotime($user['created_at'])) ; ?> </p>
-        <p><strong>Last updated: </strong> <?php echo date('Y-m-d g:i:s', strtotime($user['updated_at'])) ; ?> </p>
-
+        <h2><i class="fa fa-plus"></i> Add a new note</h2>
         <form 
-          action="update_user.php?id=<?php echo urlencode($user["id"]); ?>" 
+          action="new_note.php" 
           method="post"
-          >
+        >
           <div class="form-group">
-
-            <label for="email">Email</label>
+            <label for="title">Note title</label>
             <input 
-              type="email" 
-              name="email"
-              placeholder="Enter your email"
-              class="form-control"
-              value="<?php echo htmlentities($form_email); ?>" />
+              type="text" 
+              class="form-control" 
+              name="title" 
+              value="<?php echo $form_title; ?>" 
+              placeholder="Enter a note title"
+            />
           </div>
-
           <div class="form-group">
             <input 
               class="btn btn-primary" 
               type="submit" 
               name="submit" 
-              value="Save" 
-            />           
+              value="Add note" 
+            />
           </div>
         </form>
         <div class="form-group">
-          <a  class="btn btn-warning" href="dashboard.php"><i class="fa fa-arrow-left"></i> Dashboard</a>
-        </div>
-        <div class="form-group">
-          <a  class="btn btn-danger" href="delete_user.php"><i class="fa fa-trash-o"></i> Delete account</a>
+          <a class="btn btn-warning" href="dashboard.php"><i class="fa fa-arrow-left"></i> Back to Dashboard</a>
         </div>
       </div>
     </div>
