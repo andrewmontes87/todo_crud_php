@@ -34,7 +34,7 @@ class MySQLDatabase {
     return $result;
   }
 
-  public function last_inserted_id($sql) {
+  public function last_inserted_id() {
     $result = mysqli_insert_id($this->connection);
     $this->confirm_query($result);
     return $result;
